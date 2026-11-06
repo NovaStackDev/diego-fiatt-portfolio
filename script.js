@@ -22,7 +22,7 @@ function openBriefModal({ title, copy, action, onAction }) {
   modalAction.focus();
 }
 
-async function requestWithTimeout(url, options, timeoutMs = 45000) {
+async function requestWithTimeout(url, options, timeoutMs = 120000) {
   const controller = new AbortController();
   const timeout = window.setTimeout(() => controller.abort(), timeoutMs);
   try {
