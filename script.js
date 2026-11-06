@@ -22,16 +22,6 @@ function openBriefModal({ title, copy, action, onAction }) {
   modalAction.focus();
 }
 
-async function requestWithTimeout(url, options, timeoutMs = 120000) {
-  const controller = new AbortController();
-  const timeout = window.setTimeout(() => controller.abort(), timeoutMs);
-  try {
-    return await fetch(url, { ...options, signal: controller.signal });
-  } finally {
-    window.clearTimeout(timeout);
-  }
-}
-
 document.querySelector('#year').textContent = new Date().getFullYear();
 
 const matrixCanvas = document.querySelector('#matrix-canvas');
@@ -97,7 +87,7 @@ form.addEventListener('submit', async (event) => {
       onAction: () => document.querySelector('#services').scrollIntoView({ behavior: 'smooth' })
     });
     try {
-      const response = await requestWithTimeout(`${apiBase}/v1/brief`, {
+      const response = await fetch(`${apiBase}/v1/brief`, {
         method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ idea: ideaField.value.trim() })
       });
       const result = await response.json();
@@ -118,8 +108,8 @@ form.addEventListener('submit', async (event) => {
     } catch (error) {
       briefButton.disabled = false;
       briefButton.innerHTML = 'Create project brief <span>→</span>';
-      formStatus.textContent = 'The brief service did not respond in time. Please try once more or email Diego directly.';
-      openBriefModal({ title: 'Brief unavailable', copy: 'The brief service did not respond in time. You can try once more or email Diego directly.', action: 'Back to brief <span>↑</span>', onAction: () => ideaField.focus() });
+      formStatus.textContent = 'The brief service is unavailable. Please try again or email Diego directly.';
+      openBriefModal({ title: 'Brief unavailable', copy: 'The brief service is unavailable. You can try again or email Diego directly.', action: 'Back to brief <span>↑</span>', onAction: () => ideaField.focus() });
     }
     return;
   }
@@ -130,7 +120,7 @@ form.addEventListener('submit', async (event) => {
   briefButton.disabled = true;
   formStatus.textContent = 'Sending your approved brief…';
   try {
-    const response = await requestWithTimeout(`${apiBase}/v1/leads`, {
+    const response = await fetch(`${apiBase}/v1/leads`, {
       method: 'POST', headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ name: form.elements.name.value.trim(), email: form.elements.email.value.trim(), final_brief: finalBrief.value.trim(), original_idea: ideaField.value.trim() })
     });
