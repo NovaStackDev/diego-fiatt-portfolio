@@ -4,6 +4,7 @@ input:focus,select:focus,textarea:focus{border-bottom-color:var(--mint)}
 .project-intake{padding-top:56px}
 .project-intake form{align-content:start}
 .project-intake .idea-field,.project-intake .brief-stage{grid-column:span 2}
+.field-label{display:flex;justify-content:space-between;gap:12px}.field-label em{font-style:normal;color:var(--mint);letter-spacing:.06em}
 .brief-stage{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:26px 18px;margin-top:4px;padding-top:24px;border-top:1px solid var(--line)}
 .brief-stage>label,.brief-stage .form-note{grid-column:span 2}
 .contact-fields{display:contents}
@@ -34,6 +35,7 @@ input:focus,select:focus,textarea:focus{border-bottom-color:var(--mint)}
   nav.is-open{display:flex}
   .project-intake .idea-field,.project-intake .brief-stage,.brief-stage>label,.brief-stage .form-note,.form-status{grid-column:auto}
   .brief-stage{grid-template-columns:1fr}
+  .field-label{align-items:flex-start;flex-direction:column;gap:4px}
   .matrix-footer{height:130px}
   .matrix-footer span{left:17px;right:auto;font-size:8px;white-space:nowrap}
   .brief-modal-card{padding:28px}
