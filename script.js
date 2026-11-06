@@ -16,6 +16,33 @@ const modalTitle = document.querySelector('#brief-modal-title');
 const modalCopy = document.querySelector('#brief-modal-copy');
 const modalAction = document.querySelector('#brief-modal-action');
 let generatedBrief = false;
+let originalIdea = '';
+
+function fallbackBrief(idea) {
+  return `Project goal:
+${idea}
+
+Suggested scope:
+• Define a first version around the main user workflow.
+
+Key considerations:
+• Confirm the users, data sources, integrations, timeline, and constraints.
+
+What Diego should confirm:
+• Primary users and their roles.
+• The core workflow and expected outcome.
+• Existing systems, data, and integrations.
+• Timeline, budget range, and constraints.
+
+Diego will review this brief and provide a proper project-specific quote.`;
+}
+
+function safeBrief(raw, idea) {
+  const brief = String(raw || '').replace(/<think>[\s\S]*?<\/think>/gi, '').trim();
+  const leakedInstruction = /(we have to|visitor said|the visitor|write the project goal|system prompt|instructions?|analysis|reasoning|let'?s (?:write|think))/i;
+  const hasHeading = /^(?:#{1,3}\s*)?(?:project\s*(?:goal|brief)|objetivo(?:\s+del\s+proyecto)?)/im.test(brief);
+  return !brief || leakedInstruction.test(brief) || !hasHeading ? fallbackBrief(idea) : brief;
+}
 
 function openBriefModal({ title, copy, action, onAction }) {
   modalTitle.textContent = title;
@@ -27,6 +54,8 @@ function openBriefModal({ title, copy, action, onAction }) {
 }
 
 document.querySelector('#year').textContent = new Date().getFullYear();
+const brandLoader = document.querySelector('#brand-loader');
+window.addEventListener('load', () => window.setTimeout(() => brandLoader.classList.add('is-done'), 1650));
 
 const matrixCanvas = document.querySelector('#matrix-canvas');
 const matrixContext = matrixCanvas.getContext('2d');
@@ -83,8 +112,10 @@ form.addEventListener('submit', async (event) => {
     }
     briefButton.disabled = true;
     briefButton.innerHTML = 'Preparing briefing… <span>↻</span>';
-    visitorMessageText.textContent = ideaField.value.trim();
+    originalIdea = ideaField.value.trim();
+    visitorMessageText.textContent = originalIdea;
     visitorMessage.hidden = false;
+    ideaField.value = '';
     formStatus.textContent = 'Preparing your briefing. You can continue browsing while Qwen works.';
     openBriefModal({
       title: 'Generating your brief',
@@ -94,11 +125,11 @@ form.addEventListener('submit', async (event) => {
     });
     try {
       const response = await fetch(`${apiBase}/v1/brief`, {
-        method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ idea: ideaField.value.trim() })
+        method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ idea: originalIdea })
       });
       const result = await response.json();
-      if (!response.ok || !result.brief) throw new Error(result.error || 'Brief unavailable');
-      finalBrief.value = result.brief;
+      if (!response.ok) throw new Error(result.error || 'Brief unavailable');
+      finalBrief.value = safeBrief(result.brief, originalIdea);
       generatedBrief = true;
       ideaField.readOnly = true;
       briefStage.hidden = false;
@@ -132,7 +163,7 @@ form.addEventListener('submit', async (event) => {
     const approvedBrief = `${finalBrief.value.trim()}\n\nContact information:\nName: ${form.elements.name.value.trim()}\nCompany: ${form.elements.company.value.trim()}\nEmail: ${form.elements.email.value.trim()}\nPhone: ${form.elements.phone.value.trim()}\nBudget: ${form.elements.budget.value.trim() || 'Not provided'}`;
     const response = await fetch(`${apiBase}/v1/leads`, {
       method: 'POST', headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ name: form.elements.name.value.trim(), email: form.elements.email.value.trim(), final_brief: approvedBrief, original_idea: ideaField.value.trim() })
+      body: JSON.stringify({ name: form.elements.name.value.trim(), email: form.elements.email.value.trim(), final_brief: approvedBrief, original_idea: originalIdea })
     });
     const result = await response.json();
     if (!response.ok || result.status !== 'received') throw new Error(result.error || 'Lead unavailable');
