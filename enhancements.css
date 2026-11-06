@@ -1,4 +1,5 @@
 .menu-toggle{display:none}
+.profile-portrait{display:block;width:min(100%,220px);height:auto;margin-top:28px;filter:drop-shadow(0 16px 22px rgba(0,0,0,.38));opacity:.96}
 input:focus,select:focus,textarea:focus{border-bottom-color:var(--mint)}
 .form-status{font-size:12px;color:var(--muted);margin:0;grid-column:span 2}
 .project-intake{padding-top:56px}
