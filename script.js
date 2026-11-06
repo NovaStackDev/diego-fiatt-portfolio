@@ -7,7 +7,20 @@ const briefStage = document.querySelector('#brief-stage');
 const ideaField = form.elements.idea;
 const finalBrief = form.elements.final_brief;
 const apiBase = 'https://psyvit-all-series.tail5d3579.ts.net';
+const briefModal = document.querySelector('#brief-modal');
+const modalTitle = document.querySelector('#brief-modal-title');
+const modalCopy = document.querySelector('#brief-modal-copy');
+const modalAction = document.querySelector('#brief-modal-action');
 let generatedBrief = false;
+
+function openBriefModal({ title, copy, action, onAction }) {
+  modalTitle.textContent = title;
+  modalCopy.textContent = copy;
+  modalAction.innerHTML = action;
+  modalAction.onclick = () => { briefModal.hidden = true; onAction?.(); };
+  briefModal.hidden = false;
+  modalAction.focus();
+}
 
 async function requestWithTimeout(url, options, timeoutMs = 45000) {
   const controller = new AbortController();
@@ -77,6 +90,12 @@ form.addEventListener('submit', async (event) => {
     briefButton.disabled = true;
     briefButton.innerHTML = 'Preparing your brief… <span>↻</span>';
     formStatus.textContent = 'Creating one project brief. This can take a moment.';
+    openBriefModal({
+      title: 'Generating your brief',
+      copy: 'Continue browsing the page — we will notify you when it is ready.',
+      action: 'Continue browsing <span>↓</span>',
+      onAction: () => document.querySelector('#services').scrollIntoView({ behavior: 'smooth' })
+    });
     try {
       const response = await requestWithTimeout(`${apiBase}/v1/brief`, {
         method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ idea: ideaField.value.trim() })
@@ -90,11 +109,17 @@ form.addEventListener('submit', async (event) => {
       briefButton.disabled = false;
       briefButton.innerHTML = 'Send approved brief <span>→</span>';
       formStatus.textContent = 'Review and edit the brief, then add your contact details to send it.';
-      finalBrief.focus();
+      openBriefModal({
+        title: 'Your brief is ready',
+        copy: 'Review it, edit anything you want, then send the approved version to Diego.',
+        action: 'View brief <span>→</span>',
+        onAction: () => { document.querySelector('#project').scrollIntoView({ behavior: 'smooth' }); finalBrief.focus(); }
+      });
     } catch (error) {
       briefButton.disabled = false;
       briefButton.innerHTML = 'Create project brief <span>→</span>';
       formStatus.textContent = 'The brief service did not respond in time. Please try once more or email Diego directly.';
+      openBriefModal({ title: 'Brief unavailable', copy: 'The brief service did not respond in time. You can try once more or email Diego directly.', action: 'Back to brief <span>↑</span>', onAction: () => ideaField.focus() });
     }
     return;
   }
