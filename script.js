@@ -49,7 +49,14 @@ function resizeBrief() {
   finalBrief.style.height = `${finalBrief.scrollHeight}px`;
 }
 
+function resizeIdeaInput() {
+  ideaField.style.height = '0px';
+  ideaField.style.height = `${ideaField.scrollHeight}px`;
+}
+
 finalBrief.addEventListener('input', resizeBrief);
+ideaField.addEventListener('input', resizeIdeaInput);
+requestAnimationFrame(resizeIdeaInput);
 
 function openBriefModal({ title, copy, action, onAction }) {
   modalTitle.textContent = title;
@@ -125,6 +132,7 @@ form.addEventListener('submit', async (event) => {
     visitorMessageText.textContent = originalIdea;
     visitorMessage.hidden = false;
     ideaField.value = '';
+    resizeIdeaInput();
     formStatus.textContent = 'Preparing your briefing. You can continue browsing while Qwen works.';
     openBriefModal({
       title: 'Generating your brief',
