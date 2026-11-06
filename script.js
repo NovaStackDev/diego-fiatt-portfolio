@@ -4,6 +4,10 @@ const nav = document.querySelector('#primary-nav');
 const formStatus = document.querySelector('#form-status');
 const briefButton = document.querySelector('#brief-button');
 const briefStage = document.querySelector('#brief-stage');
+const chatComposer = document.querySelector('#chat-composer');
+const chatSendStage = document.querySelector('#chat-send-stage');
+const visitorMessage = document.querySelector('#visitor-message');
+const visitorMessageText = document.querySelector('#visitor-message-text');
 const ideaField = form.elements.idea;
 const finalBrief = form.elements.final_brief;
 const apiBase = 'https://finlike-argue-matchbox.ngrok-free.dev';
@@ -78,11 +82,13 @@ form.addEventListener('submit', async (event) => {
       return;
     }
     briefButton.disabled = true;
-    briefButton.innerHTML = 'Preparing your brief… <span>↻</span>';
-    formStatus.textContent = 'Creating one project brief. This can take a moment.';
+    briefButton.innerHTML = 'Preparing briefing… <span>↻</span>';
+    visitorMessageText.textContent = ideaField.value.trim();
+    visitorMessage.hidden = false;
+    formStatus.textContent = 'Preparing your briefing. You can continue browsing while Qwen works.';
     openBriefModal({
       title: 'Generating your brief',
-      copy: 'Continue browsing the page — we will notify you when it is ready.',
+      copy: 'Preparing briefing. Continue browsing the app and Qwen will notify you when it is ready.',
       action: 'Continue browsing <span>↓</span>',
       onAction: () => document.querySelector('#services').scrollIntoView({ behavior: 'smooth' })
     });
@@ -96,40 +102,44 @@ form.addEventListener('submit', async (event) => {
       generatedBrief = true;
       ideaField.readOnly = true;
       briefStage.hidden = false;
-      briefButton.disabled = false;
-      briefButton.innerHTML = 'Send approved brief <span>→</span>';
-      formStatus.textContent = 'Review and edit the brief, then add your contact details to send it.';
+      chatComposer.hidden = true;
+      chatSendStage.hidden = false;
+      formStatus.textContent = 'Qwen prepared the briefing. Review it, edit it, and add your contact information.';
       openBriefModal({
         title: 'Your brief is ready',
-        copy: 'Review it, edit anything you want, then send the approved version to Diego.',
+        copy: 'Qwen added the briefing to the chat. Review and edit it before sending it to Diego.',
         action: 'View brief <span>→</span>',
         onAction: () => { document.querySelector('#project').scrollIntoView({ behavior: 'smooth' }); finalBrief.focus(); }
       });
     } catch (error) {
       briefButton.disabled = false;
-      briefButton.innerHTML = 'Create project brief <span>→</span>';
+      briefButton.innerHTML = 'Send <span>→</span>';
+      visitorMessage.hidden = true;
       formStatus.textContent = 'The brief service is unavailable. Please try again or email Diego directly.';
-      openBriefModal({ title: 'Brief unavailable', copy: 'The brief service is unavailable. You can try again or email Diego directly.', action: 'Back to brief <span>↑</span>', onAction: () => ideaField.focus() });
+      openBriefModal({ title: 'Brief unavailable', copy: 'The brief service is unavailable. You can try again or email Diego directly.', action: 'Back to chat <span>↑</span>', onAction: () => ideaField.focus() });
     }
     return;
   }
-  if (!form.elements.name.checkValidity() || !form.elements.email.checkValidity() || !finalBrief.value.trim()) {
+
+  if (!form.elements.name.checkValidity() || !form.elements.company.checkValidity() || !form.elements.email.checkValidity() || !form.elements.phone.checkValidity() || !finalBrief.value.trim()) {
     form.reportValidity();
     return;
   }
-  briefButton.disabled = true;
+  const sendBriefButton = document.querySelector('#send-brief-button');
+  sendBriefButton.disabled = true;
   formStatus.textContent = 'Sending your approved brief…';
   try {
+    const approvedBrief = `${finalBrief.value.trim()}\n\nContact information:\nName: ${form.elements.name.value.trim()}\nCompany: ${form.elements.company.value.trim()}\nEmail: ${form.elements.email.value.trim()}\nPhone: ${form.elements.phone.value.trim()}\nBudget: ${form.elements.budget.value.trim() || 'Not provided'}`;
     const response = await fetch(`${apiBase}/v1/leads`, {
       method: 'POST', headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ name: form.elements.name.value.trim(), email: form.elements.email.value.trim(), final_brief: finalBrief.value.trim(), original_idea: ideaField.value.trim() })
+      body: JSON.stringify({ name: form.elements.name.value.trim(), email: form.elements.email.value.trim(), final_brief: approvedBrief, original_idea: ideaField.value.trim() })
     });
     const result = await response.json();
     if (!response.ok || result.status !== 'received') throw new Error(result.error || 'Lead unavailable');
-    formStatus.textContent = 'Received — Diego will review your brief and reply to the email you provided.';
-    briefButton.innerHTML = 'Brief sent <span>✓</span>';
+    formStatus.textContent = 'Received — Diego will review your brief and reply to the contact details you provided.';
+    sendBriefButton.innerHTML = 'Brief sent <span>✓</span>';
   } catch (error) {
-    briefButton.disabled = false;
+    sendBriefButton.disabled = false;
     formStatus.textContent = 'Unable to send right now. Please use the email link above.';
   }
 });
