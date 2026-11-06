@@ -9,6 +9,16 @@ const finalBrief = form.elements.final_brief;
 const apiBase = 'https://psyvit-all-series.tail5d3579.ts.net';
 let generatedBrief = false;
 
+async function requestWithTimeout(url, options, timeoutMs = 45000) {
+  const controller = new AbortController();
+  const timeout = window.setTimeout(() => controller.abort(), timeoutMs);
+  try {
+    return await fetch(url, { ...options, signal: controller.signal });
+  } finally {
+    window.clearTimeout(timeout);
+  }
+}
+
 document.querySelector('#year').textContent = new Date().getFullYear();
 
 const matrixCanvas = document.querySelector('#matrix-canvas');
@@ -68,7 +78,7 @@ form.addEventListener('submit', async (event) => {
     briefButton.innerHTML = 'Preparing your brief… <span>↻</span>';
     formStatus.textContent = 'Creating one project brief. This can take a moment.';
     try {
-      const response = await fetch(`${apiBase}/v1/brief`, {
+      const response = await requestWithTimeout(`${apiBase}/v1/brief`, {
         method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ idea: ideaField.value.trim() })
       });
       const result = await response.json();
@@ -84,7 +94,7 @@ form.addEventListener('submit', async (event) => {
     } catch (error) {
       briefButton.disabled = false;
       briefButton.innerHTML = 'Create project brief <span>→</span>';
-      formStatus.textContent = 'The brief service is temporarily unavailable. You can email Diego directly instead.';
+      formStatus.textContent = 'The brief service did not respond in time. Please try once more or email Diego directly.';
     }
     return;
   }
@@ -95,7 +105,7 @@ form.addEventListener('submit', async (event) => {
   briefButton.disabled = true;
   formStatus.textContent = 'Sending your approved brief…';
   try {
-    const response = await fetch(`${apiBase}/v1/leads`, {
+    const response = await requestWithTimeout(`${apiBase}/v1/leads`, {
       method: 'POST', headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ name: form.elements.name.value.trim(), email: form.elements.email.value.trim(), final_brief: finalBrief.value.trim(), original_idea: ideaField.value.trim() })
     });
