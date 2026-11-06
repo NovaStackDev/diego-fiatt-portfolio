@@ -44,6 +44,13 @@ function safeBrief(raw, idea) {
   return !brief || leakedInstruction.test(brief) || !hasHeading ? fallbackBrief(idea) : brief;
 }
 
+function resizeBrief() {
+  finalBrief.style.height = '0px';
+  finalBrief.style.height = `${finalBrief.scrollHeight}px`;
+}
+
+finalBrief.addEventListener('input', resizeBrief);
+
 function openBriefModal({ title, copy, action, onAction }) {
   modalTitle.textContent = title;
   modalCopy.textContent = copy;
@@ -111,6 +118,8 @@ form.addEventListener('submit', async (event) => {
       return;
     }
     briefButton.disabled = true;
+    briefButton.classList.add('is-loading');
+    briefButton.setAttribute('aria-busy', 'true');
     briefButton.innerHTML = 'Preparing briefing… <span>↻</span>';
     originalIdea = ideaField.value.trim();
     visitorMessageText.textContent = originalIdea;
@@ -133,8 +142,11 @@ form.addEventListener('submit', async (event) => {
       generatedBrief = true;
       ideaField.readOnly = true;
       briefStage.hidden = false;
+      requestAnimationFrame(resizeBrief);
       chatComposer.hidden = true;
       chatSendStage.hidden = false;
+      briefButton.classList.remove('is-loading');
+      briefButton.removeAttribute('aria-busy');
       formStatus.textContent = 'Qwen prepared the briefing. Review it, edit it, and add your contact information.';
       openBriefModal({
         title: 'Your brief is ready',
@@ -144,6 +156,8 @@ form.addEventListener('submit', async (event) => {
       });
     } catch (error) {
       briefButton.disabled = false;
+      briefButton.classList.remove('is-loading');
+      briefButton.removeAttribute('aria-busy');
       briefButton.innerHTML = 'Send <span>→</span>';
       visitorMessage.hidden = true;
       formStatus.textContent = 'The brief service is unavailable. Please try again or email Diego directly.';
