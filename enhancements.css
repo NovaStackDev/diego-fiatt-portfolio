@@ -16,7 +16,7 @@ input:focus,select:focus,textarea:focus{border-bottom-color:var(--mint)}
 .contact-fields{display:contents}
 .brief-stage textarea{min-height:190px}
 .project-intake button:disabled{opacity:.62;cursor:wait}
-.matrix-footer{height:185px;position:relative;overflow:hidden;background:#020805;border-top:1px solid rgba(168,240,205,.22);box-shadow:inset 0 20px 38px rgba(0,0,0,.58)}
+.matrix-footer{height:320px;position:relative;overflow:hidden;background:#020805;border-top:1px solid rgba(168,240,205,.22);box-shadow:inset 0 20px 38px rgba(0,0,0,.58)}
 .matrix-footer:before{content:"";position:absolute;inset:0;z-index:1;background:linear-gradient(180deg,#09111f 0%,transparent 38%,rgba(2,8,5,.35) 100%);pointer-events:none}
 #matrix-canvas{display:block;width:100%;height:100%;opacity:.74;filter:drop-shadow(0 0 5px rgba(91,255,171,.32))}
 .matrix-footer span{position:absolute;z-index:2;right:clamp(17px,5vw,72px);bottom:17px;color:rgba(168,240,205,.62);font:10px "DM Mono",monospace;letter-spacing:.12em}
@@ -42,7 +42,7 @@ input:focus,select:focus,textarea:focus{border-bottom-color:var(--mint)}
   .project-intake .idea-field,.project-intake .brief-stage,.brief-stage>label,.brief-stage .form-note,.form-status{grid-column:auto}
   .brief-stage{grid-template-columns:1fr}
   .field-label{align-items:flex-start;flex-direction:column;gap:4px}
-  .matrix-footer{height:130px}
+  .matrix-footer{height:200px}
   .matrix-footer span{left:17px;right:auto;font-size:8px;white-space:nowrap}
   .brief-modal-card{padding:28px}
   .chat-window-header{align-items:flex-start}.chat-status{display:none}.chat-identity span{max-width:210px;white-space:normal}.chat-transcript{min-height:310px;padding:16px;gap:14px}.chat-message,.chat-message-user{max-width:100%}.chat-brief-bubble .contact-fields{grid-template-columns:1fr}.chat-brief-bubble .contact-fields label:last-child{grid-column:auto}.chat-composer{grid-template-columns:1fr}.chat-composer .button{width:100%}
