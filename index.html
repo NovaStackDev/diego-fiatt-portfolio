@@ -26,6 +26,20 @@
     </header>
 
     <main id="top">
+      <section class="project-form-section project-intake section-shell" id="project">
+        <div class="form-intro"><p class="section-kicker">Start here</p><h2>Tell me what<br />you need built.</h2><p>Describe the outcome once. A local AI turns it into a clear project brief; you can edit every word before sending it to Diego.</p><a href="mailto:diegofiatt.software.developer@gmail.com" class="email-link">Prefer email? Write Diego directly <span>↗</span></a></div>
+        <form id="project-form" novalidate>
+          <label class="idea-field">What are you looking to build?<textarea required name="idea" rows="5" minlength="20" maxlength="3000" placeholder="For example: I need a client portal that collects requests, tracks progress, and sends clear updates."></textarea></label>
+          <p class="form-note">One idea creates one editable brief. Your contact details are requested only when you choose to send it.</p>
+          <button class="button button-primary" id="brief-button" type="submit">Create project brief <span>→</span></button>
+          <div class="brief-stage" id="brief-stage" hidden>
+            <label>Editable project brief<textarea name="final_brief" id="final-brief" rows="9" maxlength="6000"></textarea></label>
+            <div class="contact-fields"><label>Full name<input required name="name" autocomplete="name" placeholder="Your name" /></label><label>Work email<input required name="email" type="email" autocomplete="email" placeholder="you@company.com" /></label></div>
+            <p class="form-note">Sending stores this approved brief securely so Diego can reply with next steps, a quote, or a project-specific contract.</p>
+          </div>
+          <p class="form-status" id="form-status" aria-live="polite"></p>
+        </form>
+      </section>
       <section class="hero section-shell">
         <div class="eyebrow"><span class="pulse"></span> Available for selected remote work</div>
         <h1>Build the system<br /><em>behind</em> the idea.</h1>
@@ -90,19 +104,6 @@
         </ol>
       </section>
 
-      <section class="project-form-section section-shell" id="project">
-        <div class="form-intro"><p class="section-kicker">Start here</p><h2>Tell me what<br />you need built.</h2><p>A short brief is enough to start. I will reply with the right next step: a clarifying call, a quote, or a scoped contract.</p><a href="mailto:diegofiatt.software.developer@gmail.com" class="email-link">diegofiatt.software.developer@gmail.com <span>↗</span></a></div>
-        <form id="project-form">
-          <label>Full name<input required name="name" autocomplete="name" placeholder="Your name" /></label>
-          <label>Work email<input required name="email" type="email" autocomplete="email" placeholder="you@company.com" /></label>
-          <label>What do you need?<select required name="service"><option value="" disabled selected>Select a service</option><option>AI systems & automation</option><option>Product & backend engineering</option><option>Cloud & systems infrastructure</option><option>Not sure yet</option></select></label>
-          <label>Timeline<select required name="timeline"><option value="" disabled selected>Choose a timeline</option><option>Exploring options</option><option>Within 30 days</option><option>Within 1–3 months</option><option>More than 3 months</option></select></label>
-          <label>Project brief<textarea required name="brief" rows="4" placeholder="Goal, current situation, rough timeline, and anything important."></textarea></label>
-          <p class="form-note">Submitting opens a prepared email request. No data is stored on this website.</p>
-          <button class="button button-primary" type="submit">Request quote & contract <span>→</span></button>
-          <p class="form-status" id="form-status" aria-live="polite"></p>
-        </form>
-      </section>
     </main>
     <footer class="site-footer section-shell"><span>© <span id="year"></span> Diego Fiatt</span><span>AI systems · software engineering · infrastructure</span><a href="#top">Back to top ↑</a></footer>
     <script src="script.js"></script>
