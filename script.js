@@ -11,6 +11,40 @@ let generatedBrief = false;
 
 document.querySelector('#year').textContent = new Date().getFullYear();
 
+const matrixCanvas = document.querySelector('#matrix-canvas');
+const matrixContext = matrixCanvas.getContext('2d');
+const matrixCharacters = '01<>/{}[]#$%*+-=SYSTEM'.split('');
+let matrixColumns = [];
+let matrixFrame;
+
+function prepareMatrix() {
+  const scale = Math.min(window.devicePixelRatio || 1, 2);
+  matrixCanvas.width = matrixCanvas.clientWidth * scale;
+  matrixCanvas.height = matrixCanvas.clientHeight * scale;
+  matrixContext.setTransform(scale, 0, 0, scale, 0, 0);
+  matrixColumns = Array.from({ length: Math.ceil(matrixCanvas.clientWidth / 15) }, () => Math.random() * -28);
+}
+
+function drawMatrix(animate = true) {
+  const { clientWidth: width, clientHeight: height } = matrixCanvas;
+  matrixContext.fillStyle = 'rgba(2, 8, 5, .16)';
+  matrixContext.fillRect(0, 0, width, height);
+  matrixContext.font = '12px "DM Mono", monospace';
+  matrixColumns.forEach((drop, index) => {
+    const x = index * 15;
+    const y = drop * 15;
+    matrixContext.fillStyle = index % 9 === 0 ? '#e6ffef' : '#74e7a8';
+    matrixContext.fillText(matrixCharacters[(Math.random() * matrixCharacters.length) | 0], x, y);
+    matrixColumns[index] = y > height && Math.random() > .975 ? Math.random() * -18 : drop + .48 + Math.random() * .45;
+  });
+  if (animate) matrixFrame = requestAnimationFrame(drawMatrix);
+}
+
+prepareMatrix();
+const matrixMotionAllowed = window.matchMedia('(prefers-reduced-motion: no-preference)').matches;
+drawMatrix(matrixMotionAllowed);
+window.addEventListener('resize', () => { cancelAnimationFrame(matrixFrame); prepareMatrix(); drawMatrix(matrixMotionAllowed); });
+
 menuToggle.addEventListener('click', () => {
   const open = nav.classList.toggle('is-open');
   menuToggle.setAttribute('aria-expanded', String(open));
