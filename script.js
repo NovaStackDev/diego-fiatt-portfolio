@@ -141,7 +141,7 @@ directProjectForm.addEventListener('submit', async (event) => {
     const result = await response.json();
     if (!response.ok || result.status !== 'received') throw new Error(result.error || 'Lead unavailable');
     status.textContent = 'Received — Diego will review your project details and reply by email.';
-    button.innerHTML = 'Request sent <span>✓</span>';
+    button.innerHTML = 'Request sent <span class="confirmation-icon">✓</span>';
   } catch (error) {
     button.disabled = false;
     status.textContent = 'Unable to send right now. Please use the email link above.';

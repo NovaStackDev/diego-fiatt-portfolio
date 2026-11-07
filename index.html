@@ -11,7 +11,7 @@
     <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="styles.css?v=direct-intake" />
     <link rel="stylesheet" href="enhancements.css?v=direct-intake" />
-    <style>.button-primary span{display:inline-flex;align-items:center;justify-content:center;line-height:1;transform:translateY(-1px)}</style>
+    <style>button.button-primary:not(#brief-modal-action) span:not(.confirmation-icon){position:relative;display:inline-flex;flex:0 0 20px;width:20px;height:20px;font-size:0;line-height:1;transform:none}button.button-primary:not(#brief-modal-action) span:not(.confirmation-icon)::before{content:"";position:absolute;left:1px;top:9px;width:15px;height:2px;background:currentColor}button.button-primary:not(#brief-modal-action) span:not(.confirmation-icon)::after{content:"";position:absolute;right:1px;top:6px;width:6px;height:6px;border-top:2px solid currentColor;border-right:2px solid currentColor;transform:rotate(45deg)}.chat-intake button.is-loading span:not(.confirmation-icon){border:2px solid currentColor;border-left-color:transparent;border-radius:50%}.chat-intake button.is-loading span:not(.confirmation-icon)::before,.chat-intake button.is-loading span:not(.confirmation-icon)::after{display:none}.confirmation-icon{display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;font-size:17px;line-height:1}</style>
   </head>
   <body>
     <div class="brand-loader" id="brand-loader" role="status" aria-live="polite"><span class="brand-loader-word">Make it real.</span></div>
@@ -114,6 +114,6 @@
     <div class="brief-modal" id="brief-modal" role="dialog" aria-modal="true" aria-labelledby="brief-modal-title" hidden>
       <div class="brief-modal-card"><span class="modal-signal"></span><p class="section-kicker" id="brief-modal-kicker">Project intake</p><h2 id="brief-modal-title">Generating your brief</h2><p id="brief-modal-copy">Continue browsing the page — we will notify you when it is ready.</p><button class="button button-primary" id="brief-modal-action" type="button">Continue browsing <span>↓</span></button></div>
     </div>
-    <script src="script.js?v=direct-intake"></script>
+    <script src="script.js?v=arrow-geometry"></script>
   </body>
 </html>
