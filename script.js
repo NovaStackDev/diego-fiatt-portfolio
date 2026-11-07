@@ -15,6 +15,7 @@ const briefModal = document.querySelector('#brief-modal');
 const modalTitle = document.querySelector('#brief-modal-title');
 const modalCopy = document.querySelector('#brief-modal-copy');
 const modalAction = document.querySelector('#brief-modal-action');
+const directProjectForm = document.querySelector('#direct-project-form');
 let generatedBrief = false;
 let originalIdea = '';
 
@@ -116,6 +117,36 @@ nav.querySelectorAll('a').forEach((link) => link.addEventListener('click', () =>
   menuToggle.setAttribute('aria-expanded', 'false');
   menuToggle.querySelector('span').textContent = '+';
 }));
+
+directProjectForm.addEventListener('submit', async (event) => {
+  event.preventDefault();
+  if (!directProjectForm.checkValidity()) {
+    directProjectForm.reportValidity();
+    return;
+  }
+  const button = directProjectForm.querySelector('button[type="submit"]');
+  const status = directProjectForm.querySelector('.direct-form-status');
+  const details = directProjectForm.elements.details.value.trim();
+  const name = directProjectForm.elements.name.value.trim();
+  const email = directProjectForm.elements.email.value.trim();
+  const directBrief = `Direct project request\n\nProject details:\n${details}\n\nContact information:\nName: ${name}\nEmail: ${email}`;
+  button.disabled = true;
+  status.textContent = 'Sending directly to Diego…';
+  try {
+    const response = await fetch(`${apiBase}/v1/leads`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ name, email, final_brief: directBrief, original_idea: details })
+    });
+    const result = await response.json();
+    if (!response.ok || result.status !== 'received') throw new Error(result.error || 'Lead unavailable');
+    status.textContent = 'Received — Diego will review your project details and reply by email.';
+    button.innerHTML = 'Request sent <span>✓</span>';
+  } catch (error) {
+    button.disabled = false;
+    status.textContent = 'Unable to send right now. Please use the email link above.';
+  }
+});
 
 form.addEventListener('submit', async (event) => {
   event.preventDefault();

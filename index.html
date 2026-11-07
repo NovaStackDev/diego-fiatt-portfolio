@@ -9,8 +9,8 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="styles.css?v=chat-input" />
-    <link rel="stylesheet" href="enhancements.css?v=chat-input" />
+    <link rel="stylesheet" href="styles.css?v=direct-intake" />
+    <link rel="stylesheet" href="enhancements.css?v=direct-intake" />
   </head>
   <body>
     <div class="brand-loader" id="brand-loader" role="status" aria-live="polite"><span class="brand-loader-word">Make it real.</span></div>
@@ -94,6 +94,7 @@
           <article class="project"><div class="project-art art-voice"><span class="art-label">VOICE PIPELINE</span><div class="wave"><b></b><b></b><b></b><b></b><b></b><b></b><b></b></div></div><div class="project-copy"><p class="project-type">Conversational AI</p><h3>Voice interaction pipeline</h3><p>LLM, text-to-speech, event handling, context management, and testable orchestration for natural bilingual interactions.</p><span>Ollama · Hugging Face · TTS · Python</span></div></article>
           <article class="project"><div class="project-art art-commerce"><span class="art-label">COMMERCE OPS</span><div class="commerce-lines"><i></i><i></i><i></i><i></i></div></div><div class="project-copy"><p class="project-type">Private platform</p><h3>Ecommerce operations</h3><p>Operations-focused software for catalog, inventory, workflow, and administration — designed around reliable data and controlled changes.</p><span>TypeScript · PostgreSQL · Docker · APIs</span></div></article>
           <article class="project"><div class="project-art art-infra"><span class="art-label">SYSTEMS</span><div class="terminal"><span class="terminal-line" style="--characters:19"><b>$</b> services healthy_</span><span class="terminal-line" style="--characters:23"><b>$</b> secure remote access_</span><span class="terminal-line" style="--characters:18"><b>$</b> deploy verified_</span></div></div><div class="project-copy"><p class="project-type">Infrastructure</p><h3>Reliable remote systems</h3><p>Linux-based infrastructure, containerized services, secure remote access, and methodical network and service diagnosis.</p><span>Linux · Docker · SSH · systemd</span></div></article>
+          <article class="project direct-project-card"><div class="project-art art-direct"><span class="art-label">DIRECT INTAKE</span><div class="direct-signal"><i></i><i></i><i></i></div><p>Send the essentials.<br />Diego reviews it directly.</p></div><form id="direct-project-form" class="direct-project-form" novalidate><div class="project-copy"><p class="project-type">No AI briefing</p><h3>Send a project directly</h3><label>Project details<textarea required name="details" rows="5" minlength="20" maxlength="3000" placeholder="What are you building, who is it for, and what outcome do you need?"></textarea></label><div class="direct-contact-fields"><label>Full name<input required name="name" autocomplete="name" maxlength="120" placeholder="Your name" /></label><label>Work email<input required name="email" type="email" autocomplete="email" maxlength="254" placeholder="you@company.com" /></label></div><button class="button button-primary" type="submit">Send direct request <span>→</span></button><p class="direct-form-status" aria-live="polite"></p></div></form></article>
         </div>
       </section>
 
@@ -112,6 +113,6 @@
     <div class="brief-modal" id="brief-modal" role="dialog" aria-modal="true" aria-labelledby="brief-modal-title" hidden>
       <div class="brief-modal-card"><span class="modal-signal"></span><p class="section-kicker" id="brief-modal-kicker">Project intake</p><h2 id="brief-modal-title">Generating your brief</h2><p id="brief-modal-copy">Continue browsing the page — we will notify you when it is ready.</p><button class="button button-primary" id="brief-modal-action" type="button">Continue browsing <span>↓</span></button></div>
     </div>
-    <script src="script.js?v=chat-input"></script>
+    <script src="script.js?v=direct-intake"></script>
   </body>
 </html>
