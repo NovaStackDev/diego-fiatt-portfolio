@@ -27,22 +27,6 @@
     </header>
 
     <main id="top">
-      <section class="project-form-section project-intake section-shell" id="project">
-        <div class="form-intro"><p class="section-kicker">Start here</p><h2>Make it<br /><em>real.</em></h2><p>Describe the outcome once. Qwen AI agent turns it into a clear project brief; you can edit every word before sending it to Diego.</p><a href="mailto:diegofiatt.software.developer@gmail.com" class="email-link">Prefer email? Write Diego directly <span>↗</span></a></div>
-        <form id="project-form" class="chat-intake" novalidate>
-          <div class="chat-window">
-            <div class="chat-window-header"><div class="chat-identity"><img class="chat-avatar" src="assets/diego-fiatt-cyber-portrait.png" alt="" width="1024" height="1024" /><div><strong>Qwen</strong><span>Diego Fiatt's Personal Assistant Agent · Qwen3 4B</span></div></div><span class="chat-status"><i></i> Online</span></div>
-            <div class="chat-transcript" id="chat-transcript" aria-live="polite">
-              <article class="chat-message chat-message-assistant"><img class="chat-avatar" src="assets/diego-fiatt-cyber-portrait.png" alt="" width="1024" height="1024" /><div class="chat-bubble"><p class="chat-sender">Qwen</p><p>Hello, I am Diego Fiatt's Personal Assistant Agent powered by Qwen 3 4B. I am here to assist you. Please tell me about your project and I will make sure to contact him on your behalf.</p></div></article>
-              <article class="chat-message chat-message-user" id="visitor-message" hidden><div class="chat-bubble"><p class="chat-sender">You</p><p id="visitor-message-text"></p></div></article>
-              <article class="chat-message chat-message-assistant" id="brief-stage" hidden><img class="chat-avatar" src="assets/diego-fiatt-cyber-portrait.png" alt="" width="1024" height="1024" /><div class="chat-bubble chat-brief-bubble"><p class="chat-sender">Qwen</p><p class="brief-title">What will be sent to Diego on your behalf:</p><label class="brief-editor-label">Qwen briefing response (editable).<textarea name="final_brief" id="final-brief" rows="10" maxlength="5000" required></textarea></label><div class="contact-fields"><label>Name<input required name="name" autocomplete="name" maxlength="120" placeholder="Name LastName" /></label><label>Company<input required name="company" autocomplete="organization" maxlength="160" placeholder="Company" /></label><label>Email<input required name="email" type="email" autocomplete="email" maxlength="254" placeholder="you@company.com" /></label><label>Phone number<input required name="phone" type="tel" autocomplete="tel" maxlength="40" pattern="[0-9+() .-]{7,40}" placeholder="+506 0000 0000" /></label><label>Budget <span>(optional)</span><input name="budget" maxlength="80" placeholder="e.g. USD 2,000–5,000" /></label></div></div></article>
-            </div>
-            <div class="chat-composer" id="chat-composer"><label class="sr-only" for="chat-input">Describe your project</label><textarea id="chat-input" required name="idea" rows="3" minlength="20" maxlength="3000" placeholder="Tell Qwen what you need to build..."></textarea><button class="button button-primary" id="brief-button" type="submit">Send <span>→</span></button></div>
-            <div class="chat-send-stage" id="chat-send-stage" hidden><button class="button button-primary" id="send-brief-button" type="submit">Send approved brief to Diego <span>→</span></button></div>
-          </div>
-          <p class="form-status" id="form-status" aria-live="polite"></p>
-        </form>
-      </section>
       <section class="hero section-shell">
         <div class="eyebrow"><span class="pulse"></span> Available for selected remote work</div>
         <h1>Automations that<br /><em>save time</em> and<br />make you money.</h1>
@@ -58,7 +42,22 @@
           <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
         </div>
       </section>
-
+      <section class="project-form-section project-intake section-shell" id="project">
+        <div class="form-intro"><p class="section-kicker">Start here</p><h2>Make it<br /><em>real.</em></h2><p>Describe your project once. Qwen AI agent turns it into a clear brief; you can edit every word before sending it to the Developer.</p><a href="mailto:diegofiatt.software.developer@gmail.com" class="email-link">Prefer email? Write Diego directly <span>↗</span></a></div>
+        <form id="project-form" class="chat-intake" novalidate>
+          <div class="chat-window">
+            <div class="chat-window-header"><div class="chat-identity"><img class="chat-avatar" src="assets/diego-fiatt-cyber-portrait.png" alt="" width="1024" height="1024" /><div><strong>Qwen</strong><span>Diego Fiatt's Personal Assistant Agent · Qwen3 4B</span></div></div><span class="chat-status"><i></i> Online</span></div>
+            <div class="chat-transcript" id="chat-transcript" aria-live="polite">
+              <article class="chat-message chat-message-assistant"><img class="chat-avatar" src="assets/diego-fiatt-cyber-portrait.png" alt="" width="1024" height="1024" /><div class="chat-bubble"><p class="chat-sender">Qwen</p><p>Hello, I am Diego Fiatt's Personal Assistant Agent powered by Qwen 3 4B. I am here to assist you. Please tell me about your project and I will make sure to contact him on your behalf.</p></div></article>
+              <article class="chat-message chat-message-user" id="visitor-message" hidden><div class="chat-bubble"><p class="chat-sender">You</p><p id="visitor-message-text"></p></div></article>
+              <article class="chat-message chat-message-assistant" id="brief-stage" hidden><img class="chat-avatar" src="assets/diego-fiatt-cyber-portrait.png" alt="" width="1024" height="1024" /><div class="chat-bubble chat-brief-bubble"><p class="chat-sender">Qwen</p><p class="brief-title">What will be sent to Diego on your behalf:</p><label class="brief-editor-label">Qwen briefing response (editable).<textarea name="final_brief" id="final-brief" rows="10" maxlength="5000" required></textarea></label><div class="contact-fields"><label>Name<input required name="name" autocomplete="name" maxlength="120" placeholder="Name LastName" /></label><label>Company<input required name="company" autocomplete="organization" maxlength="160" placeholder="Company" /></label><label>Email<input required name="email" type="email" autocomplete="email" maxlength="254" placeholder="you@company.com" /></label><label>Phone number<input required name="phone" type="tel" autocomplete="tel" maxlength="40" pattern="[0-9+() .-]{7,40}" placeholder="+506 0000 0000" /></label><label>Budget <span>(optional)</span><input name="budget" maxlength="80" placeholder="e.g. USD 2,000–5,000" /></label></div></div></article>
+            </div>
+            <div class="chat-composer" id="chat-composer"><label class="sr-only" for="chat-input">Describe your project</label><textarea id="chat-input" required name="idea" rows="3" minlength="20" maxlength="3000" placeholder="Tell Qwen what you need to build..."></textarea><button class="button button-primary" id="brief-button" type="submit">Send <span>→</span></button></div>
+            <div class="chat-send-stage" id="chat-send-stage" hidden><button class="button button-primary" id="send-brief-button" type="submit">Send approved brief to Diego <span>→</span></button></div>
+          </div>
+          <p class="form-status" id="form-status" aria-live="polite"></p>
+        </form>
+      </section>
       <section class="intro section-shell">
         <p class="section-kicker">What I do</p>
         <div class="intro-layout">
