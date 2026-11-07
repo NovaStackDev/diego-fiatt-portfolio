@@ -190,14 +190,14 @@ form.addEventListener('submit', async (event) => {
       openBriefModal({
         title: 'Your brief is ready',
         copy: 'Qwen added the briefing to the chat. Review and edit it before sending it to Diego.',
-        action: 'View brief <span>→</span>',
+        action: 'View brief <span>↗</span>',
         onAction: () => { document.querySelector('#project').scrollIntoView({ behavior: 'smooth' }); finalBrief.focus(); }
       });
     } catch (error) {
       briefButton.disabled = false;
       briefButton.classList.remove('is-loading');
       briefButton.removeAttribute('aria-busy');
-      briefButton.innerHTML = 'Send <span>→</span>';
+      briefButton.innerHTML = 'Send <span>↗</span>';
       visitorMessage.hidden = true;
       formStatus.textContent = 'The brief service is unavailable. Please try again or email Diego directly.';
       openBriefModal({ title: 'Brief unavailable', copy: 'The brief service is unavailable. You can try again or email Diego directly.', action: 'Back to chat <span>↑</span>', onAction: () => ideaField.focus() });
